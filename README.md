@@ -10,7 +10,7 @@ Feito na mesma base do site do Cafezito.
 ## Como funciona
 
 - `index.html`, `assets/css/style.css`, `assets/js/site.js`: HTML, CSS e JS puros, sem build.
-- `assets/js/cardapio.js`: o cardápio inteiro (48 itens do iFood em 28/10/2026), o horário da semana e os
+- `assets/js/cardapio.js`: o cardápio inteiro (45 itens do iFood em 28/10/2026; ficaram de fora refrigerante, tônica e cartão postal), o horário da semana e os
   textos dos destaques por hora. O link do item é `link da loja + ?prato=<código>` e abre o iFood já no
   produto. Item sem código cai na loja.
 - `assets/js/fumaca.js`: a fumaça do hero (o shader do Zaparolli, no modo 3, que ocupa a área toda), sobre o
