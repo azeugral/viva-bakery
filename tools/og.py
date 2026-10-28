@@ -1,7 +1,7 @@
 """Gera assets/img/og.jpg (1200x630), favicon.png (64) e apple-touch-icon.png (180) num Chromium headless.
-A og tem a fumaça do hero (assets/js/fumaca.js) sobre o verde e o logo gravado no centro, dentro do
-quadrado central de 630 px, porque o WhatsApp corta a miniatura em quadrado. O ícone é "VB" em
-Libre Caslon num círculo verde: o logo gravado não se lê em 64 px.
+A og tem a fumaça do hero (assets/js/fumaca.js) sobre o verde e o monograma VB com o nome no centro, dentro do
+quadrado central de 630 px, porque o WhatsApp corta a miniatura em quadrado. O ícone é o monograma
+num círculo verde.
 
 Uso: python -I tools/og.py
 """
@@ -25,14 +25,15 @@ def main():
     .og canvas{{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen}}
     .og .veu{{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(24,41,31,.82) 0,rgba(24,41,31,.5) 38%,rgba(24,41,31,0) 70%)}}
     .og .tx{{position:absolute;left:285px;top:0;width:630px;height:630px;display:flex;flex-direction:column;align-items:center;justify-content:center}}
-    .og img{{width:470px}}
+    .og img{{width:230px}}
+    .og h1{{margin:20px 0 0;font:400 92px/1 'Libre Caslon Display',serif;letter-spacing:-.01em}}
     .og p{{margin:22px 0 0;font-size:19px;letter-spacing:.24em;text-transform:uppercase;color:#d98a52;font-weight:500}}
     </style></head><body><div class="og"><canvas id="c" width="1200" height="630"></canvas>
-    <div class="veu"></div><div class="tx"><img src="{logo}"><p>Padaria artesanal · Americana</p></div></div></body></html>"""
+    <div class="veu"></div><div class="tx"><img src="{logo}"><h1>Viva Bakery</h1><p>Padaria artesanal · Americana</p></div></div></body></html>"""
     icone = f"""<html><head>{FONTE}<style>body{{margin:0;background:transparent}}
-    .s{{width:180px;height:180px;border-radius:50%;background:{VERDE};color:{CREME};display:flex;align-items:center;justify-content:center;
-    font-family:'Libre Caslon Display',serif;font-size:92px;letter-spacing:-.04em;padding-top:8px;box-sizing:border-box}}</style></head>
-    <body><div class="s">VB</div></body></html>"""
+    .s{{width:180px;height:180px;border-radius:50%;background:{VERDE};display:flex;align-items:center;justify-content:center}}
+    .s img{{width:122px}}</style></head>
+    <body><div class="s"><img src="{logo}"></div></body></html>"""
     with sync_playwright() as pw:
         b = pw.chromium.launch(args=["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"])
         pg = b.new_page(viewport={"width": 1200, "height": 630})

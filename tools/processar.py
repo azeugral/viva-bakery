@@ -7,6 +7,7 @@ contando a partir de 27/10/2026) e K a foto do carrossel. Quadros de vídeo vêm
 
 Uso: python -I tools/processar.py
 """
+import json
 from pathlib import Path
 
 from PIL import Image, ImageEnhance, ImageOps
@@ -84,9 +85,13 @@ def salvar(im, nome):
 
 
 def logo():
-    """A arte gravada do post 092 (tinta preta no branco) vira PNG transparente: a tinta é o alfa."""
-    arte = ImageOps.grayscale(Image.open(ORIGEM / "092-5.jpg"))
-    tinta = ImageOps.invert(arte).point(lambda v: 0 if v < 28 else min(255, int((v - 28) * 1.25)))
+    """O monograma VB que o cliente mandou (../_ref/logo/vb-monograma.webp, verde no branco) vira PNG
+    transparente: a tinta é o alfa. Os filetes brancos de dentro das letras ficam vazados."""
+    bruto = Image.open(RAIZ.parent / "_ref" / "logo" / "vb-monograma.webp").convert("RGBA")
+    fundo = Image.new("RGBA", bruto.size, (255, 255, 255, 255))
+    fundo.alpha_composite(bruto)
+    arte = ImageOps.grayscale(fundo.convert("RGB"))
+    tinta = ImageOps.invert(arte).point(lambda v: 0 if v < 40 else min(255, int((v - 40) * 1.6)))
     caixa = tinta.getbbox()
     tinta = tinta.crop((caixa[0] - 8, caixa[1] - 8, caixa[2] + 8, caixa[3] + 8))
     for nome, cor in (("logo-creme", (244, 236, 223)), ("logo-tinta", (28, 40, 32))):
@@ -97,13 +102,27 @@ def logo():
         menor.save(SAIDA / f"{nome}-sm.png", optimize=True)
 
 
+def ifood():
+    """Fotos dos itens que não aparecem no Instagram, baixadas do iFood em 900x675 (../_ref/ifood/<id>.jpg,
+    com o slug de cada id em mapa.json). Saem como if-<slug>, no mesmo recorte 4:5 do resto."""
+    pasta = RAIZ.parent / "_ref" / "ifood"
+    mapa = json.loads((pasta / "mapa.json").read_text(encoding="utf-8"))
+    n = 0
+    for arq in sorted(pasta.glob("*.jpg")):
+        im = Image.open(arq).convert("RGB")
+        salvar(ImageEnhance.Contrast(recortar(im, 4 / 5, .5, .5)).enhance(1.03), "if-" + mapa[arq.stem[:8]])
+        n += 1
+    return n
+
+
 def main():
     SAIDA.mkdir(parents=True, exist_ok=True)
     for nome, (origem, prop, fy, fx) in FOTOS.items():
         im = Image.open(achar(origem)).convert("RGB")
         salvar(ImageEnhance.Contrast(recortar(im, prop, fy, fx)).enhance(1.03), nome)
+    n = ifood()
     logo()
-    print(len(FOTOS), "fotos e o logo em", SAIDA)
+    print(len(FOTOS), "fotos do Instagram,", n, "do iFood e o logo em", SAIDA)
 
 
 if __name__ == "__main__":

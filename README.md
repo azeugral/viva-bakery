@@ -20,14 +20,18 @@ Feito na mesma base do site do Cafezito.
   mostra se está aberto, e o domingo só conta quando é o último do mês.
 - **Link de um item:** `#item/canele` abre a ficha direto, para usar em story ou no WhatsApp.
 - **Modo balcão:** `?balcao` esconde todos os botões do iFood, para usar em QR code nas mesas.
-- O logo é a arte gravada do post da ecobag (`_ref/ig/092-5.jpg`), transformada em PNG transparente
-  creme e tinta por `tools/processar.py`.
+- O logo é o monograma VB enviado pelo cliente (`_ref/logo/vb-monograma.webp`), transformado em PNG
+  transparente creme por `tools/processar.py`. Vai no hero, no topo, no rodapé, no ícone e na og, sempre
+  com o nome "Viva Bakery" em Libre Caslon ao lado ou embaixo.
+- Fotos: 32 do Instagram (recortes em `tools/processar.py`) e 20 do próprio iFood em 900x675
+  (`_ref/ifood/<id>.jpg`, saem como `if-<slug>`). 9 itens também não têm foto no iFood e ficam com a cor
+  do item e a fumaça.
 
 ## Ferramentas
 
 | Comando | O que faz |
 |---|---|
-| `python -I tools/processar.py` | recorta as fotos de `../_ref/ig` e `../_ref/quadros` e gera o logo |
+| `python -I tools/processar.py` | recorta as fotos (Instagram, quadros de vídeo e iFood) e gera o logo |
 | `python -I tools/gerar_fumaca.py` | renderiza o MP4 da fumaça para o celular (`--teste` salva quadros) |
 | `python -I tools/og.py` | gera og.jpg, favicon e apple-touch-icon |
 | `python -I tools/prints.py` | prints de revisão em PC e celular (`--ficha slug` para uma ficha) |
@@ -39,9 +43,9 @@ Depois de mudar CSS, JS ou vídeo, subir o `?v=` no `index.html`, senão o naveg
 - [ ] Domingo: a bio diz "abertos todo último domingo do mês", e os posts recentes falam em 9h às 14h. O site
       usa esse horário e só considera aberto no último domingo.
 - [ ] O WhatsApp (19) 98334-9032 veio do Perfil do Google. É o de atendimento?
-- [ ] O logo diz "desde 2013", mas a Viva fez 8 anos em 21/09/2026 (abertura em 2018). O site diz "desde 2018".
 - [ ] Preços: o site mostra os do iFood. No balcão são outros?
-- [ ] Fotos de itens que não aparecem no Instagram (sem foto, a ficha usa a cor do item com a fumaça).
+- [ ] Fotos de Sanduíche no Croissant, Croque Monsieur, Croque Forestier, Bolo Inglês de Cacau, Chocolate Quente,
+      Cafés Gelados, Granola e Mousse: não estão nem no Instagram nem no iFood.
 - [ ] Se dá para usar as fotos da Karina, do Gabriel e do Pumpkin, e as do salão (estas são quadros de vídeo).
 - [ ] Os links dos cursos são de afiliado Hotmart do Linktree. São os oficiais?
 - [ ] Domínio e tirar o `noindex` quando for oficial.

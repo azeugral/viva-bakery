@@ -342,9 +342,10 @@ body.travado { overflow: hidden; }
   .trio { grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .lugar__grade { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .ficha { width: 100vw; max-height: 100svh; height: 100svh; margin: 0; }
-  .ficha__caixa { grid-template-columns: 1fr; height: 100svh; max-height: 100svh; overflow-y: auto; }
+  /* empilhado, não em grade: numa grade de altura fixa a linha da foto encolhia e a foto cobria o texto */
+  .ficha__caixa { display: block; height: 100svh; max-height: 100svh; overflow-y: auto; }
   .ficha__midia { min-height: 0; }
-  .ficha__midia img { aspect-ratio: 4 / 4.2; height: auto; }
+  .ficha__midia img { width: 100%; aspect-ratio: 4 / 4.2; height: auto; }
   .ficha__letra { position: static; min-height: 46svh; }
   .ficha__corpo { overflow: visible; padding-bottom: 40px; }
 }
@@ -397,14 +398,16 @@ body.travado { overflow: hidden; }
 .ficha__combina button { font-size: .82rem; letter-spacing: .06em; }
 .gaveta nav a { font-size: 2.1rem; }
 
-/* marca no topo e no rodapé: o logo gravado */
-.marca { width: auto; height: auto; border: 0; border-radius: 0; background: none; padding: 0; }
-.marca img { width: 104px; height: auto; display: block; }
-.rodape__logo { width: min(320px, 70%); height: auto; margin: 0 auto; }
+/* marca no topo e no rodapé: o monograma VB + o nome em Caslon */
+.marca { width: auto; height: auto; border: 0; border-radius: 0; background: none; padding: 0; flex-direction: row; gap: 12px; }
+.marca img { width: 46px; height: auto; display: block; }
+.marca span { font: 400 1.35rem/1 var(--serifa); letter-spacing: 0; text-transform: none; }
+.rodape__logo { width: 120px; height: auto; margin: 0 auto; }
+.rodape__nome { margin-top: 14px; font: 400 2.2rem/1 var(--serifa); }
 
-/* hero: o logo é o título */
-.hero__logo { margin: 14px 0 18px -1%; }
-.hero__logo img { width: min(470px, 100%); height: auto; filter: drop-shadow(0 6px 30px rgba(0,0,0,.35)); }
+/* hero: o monograma em cima, o nome embaixo */
+.hero__logo { margin: 18px 0 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; font: 400 clamp(3.6rem, 7.4vw, 6.8rem)/.92 var(--serifa); letter-spacing: -.01em; }
+.hero__logo img { width: clamp(150px, 15vw, 220px); height: auto; filter: drop-shadow(0 6px 30px rgba(0,0,0,.35)); }
 .hero__lema { color: var(--crema); filter: brightness(1.35); }
 
 /* faixa de esmalte (o prato verde de borda da casa) no lugar do xadrez */
@@ -432,8 +435,10 @@ body.travado { overflow: hidden; }
 .lugar__grade figure { background: var(--carvao); }
 
 @media (max-width: 900px) {
-  .marca img { width: 74px; }
-  .hero__logo img { width: min(440px, 100%); }
+  .marca img { width: 38px; }
+  .marca span { font-size: 1.15rem; }
+  .hero__logo { font-size: clamp(3rem, 15vw, 4.6rem); gap: 14px; }
+  .hero__logo img { width: 130px; }
 }
 @media (max-width: 560px) {
   .dupla--cursos { grid-template-columns: 1fr; gap: 44px; }
